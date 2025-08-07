@@ -16,7 +16,7 @@ export default function AuthForm() {
         const email = (form.elements.namedItem('email') as HTMLInputElement).value;
         const password = (form.elements.namedItem('password') as HTMLInputElement).value;
 
-        fetch("https://noteboard-server.onrender.com/api/auth/login", {
+        fetch("/api/auth/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
