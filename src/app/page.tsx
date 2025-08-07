@@ -1,81 +1,31 @@
-    "use client"
-    import {useEffect, useState} from "react";
-    import {Card} from "@/components/UI/Card";
-    import {CardType} from "@/components/Types/Card";
+"use client"
 
-    export default function Home() {
-        const [cards, setCards] = useState([])
-        const [currentPage, setCurrentPage] = useState<number>(1)
-        const [fetching, setFetching] = useState(true)
-        const [totalPages, setTotalPages] = useState<number>(0)
-        const [totalTrue, setTotalTrue] = useState<boolean>(false)
-        const [error, setError] = useState<boolean>(false)
-        // @ts-ignore
-        const scrollHandler = (e) =>{
-            if(e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 800){
-                setFetching(true)
-            }
-        }
-        useEffect(()=>{
-            if(fetching && (totalPages === 0 || totalPages >= currentPage)){
-                fetch(`https://noteboard-server.onrender.com/api/cards/getallcards?limit=10&page=${currentPage}`)
-                    .then(res =>res.json())
-                    .then(data => {
-                        // @ts-ignore
-                        setCards([...cards, ...data.cards])
-                        setCurrentPage(currentPage + 1)
-                        setTotalPages(data.totalPages)
-                    })
-                    .catch(err => {
-                        setError(true)
-                    })
-                    .finally(() => setFetching(false));
-            } else{
-                setTotalTrue(true)
-            }
-
-        },[fetching])
-        useEffect(()=>{
-            document.addEventListener('scroll', scrollHandler);
-
-            return function (){
-                document.removeEventListener('scroll', scrollHandler);
-            }
-        },[])
-        if(cards.length > 0){
-            return(
-                <div>
-                    <div className = "flex flex-col  flex-wrap items-center md:flex-row md:justify-between ">
-                        {
-                            cards.map((card: CardType) => (
-                                <Card
-                                    id={card.id}
-                                    image={card.image}
-                                    key={card.id}
-                                    name={card.name}
-                                    description={card.description}
-                                />
-                            ))
-                        }
+export default function Home() {
+    return(
+        <>
+            <div className="flex  min-h-screen flex-wrap">
+                <div className="w-1/2 flex justify-center items-center ">
+                    <h1 className="text-7xl ml-6"><span className="text-[#f5ff75]">NoteBoard</span> - ваш личный помощник</h1>
+                </div>
+                <div className="w-1/2 flex flex-col justify-center justify-items-center flex-wrap items-center md:flex-row  ">
+                    <div className="m-4 rounded-2xl bg-[#282828] max-w-[380px] ">
+                        <img src="./test.png" alt="test" width={380} height={380} className="rounded-t-2xl"/>
+                        <h2 className="text-center text-2xl m-1 ">Пример 1</h2>
+                        <p className="m-4">Эта карточка просто пример. А Картинка - аватарка разработчика</p>
                     </div>
-
-                    {totalTrue && <p className="text-center mt-12">Карточки закончились</p>}
+                    <div className="m-4 rounded-2xl bg-[#282828] max-w-[380px]">
+                        <img src="./test2.jpg" alt="test" width={380} height={380} className="rounded-t-2xl"/>
+                        <h2 className="text-center text-2xl m-1 ">Пример 2</h2>
+                        <p className="m-4">Это тоже пример карточки, но уже с другой картинкой</p>
+                    </div>
                 </div>
-            )
-        }else if(error){
-            return(
-                <div className="text-center text-red-500">
-                    <p>Ошибка загрузки данных, попробуйте снова</p>
+            </div>
+            <div className="flex justify-center items-center mb-4">
+                <div className="w-1/2 bg-[#282828] rounded-2xl p-12">
+                    <h3 className="text-5xl mb-2">Что такое <span className="text-[#f5ff75]">NoteBoard</span>?</h3>
+                    <p className="text-2xl "><span className="text-[#f5ff75]">NoteBoard</span> - это специальное веб-приложение для ваших заметок. Само по себе оно является простой доской с карточками заметок. Вы можете сохранить какое-то изображение с подписями и тегами </p>
                 </div>
-            )
-        }
-        else{
-            return(
-                <div className="text-center">
-                    <p>Подгрузка данных...</p>
-                </div>
-
-            )
-        }
-
-    }
+            </div>
+        </>
+    )
+}

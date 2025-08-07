@@ -1,12 +1,20 @@
 "use client";
 import Link from "next/link";
+import {usePathname} from "next/navigation";
 export default function Header() {
+        const pathname = usePathname();
+
+        if (pathname === "/auth") return <></>;
         return (
-            <header className={"flex justify-between items-center p-4"}>
+            /* Сделать хедер статичным при скроле */
+            <header className="flex justify-between items-center p-4">
                 <div className="flex items-center gap-2">
-                    <Link href="/">NoteBoard</Link>
+                    <Link href="/" className="text-[#EFFF41] text-xl">NB</Link>
                 </div>
-                <Link href="/newcard" className="border p-1 rounded-lg">Create note</Link>
+                <div className="flex flex-wrap gap-2 justify-between items-center">
+                    <Link href="/auth" className="p-2 rounded-lg  hover:bg-[#262626]  hover:text-[#f8ff8a] ">Account </Link>
+                    {/*<Link href="/newcard" className="p-1  rounded-lg hover:underline">Create note</Link>*/}
+                </div>
             </header>
         )
 }
