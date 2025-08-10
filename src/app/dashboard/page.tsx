@@ -1,81 +1,23 @@
 "use client"
-import {useEffect, useState} from "react";
-import {Card} from "@/components/UI/Card";
-import {CardType} from "@/components/Types/Card";
+import {useState} from "react";
+import CardsComponent from "@/components/UI/CardsComponent";
+import NewCardComponent from "@/components/UI/NewCardComponent";
 
-export default function Home() {
-    const [cards, setCards] = useState([])
-    const [currentPage, setCurrentPage] = useState<number>(1)
-    const [fetching, setFetching] = useState(true)
-    const [totalPages, setTotalPages] = useState<number>(0)
-    const [totalTrue, setTotalTrue] = useState<boolean>(false)
-    const [error, setError] = useState<boolean>(false)
-    // @ts-ignore
-    const scrollHandler = (e) =>{
-        if(e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 800){
-            setFetching(true)
-        }
-    }
-    useEffect(()=>{
-        if(fetching && (totalPages === 0 || totalPages >= currentPage)){
-            fetch(`https://noteboard-server.onrender.com/api/cards/getallcards?limit=10&page=${currentPage}`)
-                .then(res =>res.json())
-                .then(data => {
-                    // @ts-ignore
-                    setCards([...cards, ...data.cards])
-                    setCurrentPage(currentPage + 1)
-                    setTotalPages(data.totalPages)
-                })
-                .catch(err => {
-                    setError(true)
-                })
-                .finally(() => setFetching(false));
-        } else{
-            setTotalTrue(true)
-        }
+export default function Dashboard () {
+    const [notestate, setNoteState] = useState<true | false>(true)
 
-    },[fetching])
-    useEffect(()=>{
-        document.addEventListener('scroll', scrollHandler);
-
-        return function (){
-            document.removeEventListener('scroll', scrollHandler);
-        }
-    },[])
-    if(cards.length > 0){
-        return(
-            <div>
-                <div className = "flex flex-col  flex-wrap items-center md:flex-row md:justify-between ">
-                    {
-                        cards.map((card: CardType) => (
-                            <Card
-                                id={card.id}
-                                image={card.image}
-                                key={card.id}
-                                name={card.name}
-                                description={card.description}
-                            />
-                        ))
-                    }
+    return (
+        <>
+            <div className="flex flex-col justify-center items-center gap-5 p-5">
+                <h1 className='text-5xl text-center mt-4'> Привет, Сергей</h1>
+                <div className="flex gap-5">
+                    <button onClick={() => {setNoteState(true)}} className="p-2 rounded-lg  hover:bg-[#262626]  hover:text-[#f8ff8a] "> Мои заметки</button>
+                    <button  onClick={() => {setNoteState(false)}} className="p-2 rounded-lg  hover:bg-[#262626]  hover:text-[#f8ff8a] "> Создать заметку</button>
                 </div>
-
-                {totalTrue && <p className="text-center mt-12">Карточки закончились</p>}
+                <div>
+                    {notestate ? <CardsComponent/> : <NewCardComponent/>}
+                </div>
             </div>
-        )
-    }else if(error){
-        return(
-            <div className="text-center text-red-500">
-                <p>Ошибка загрузки данных, попробуйте снова</p>
-            </div>
-        )
-    }else{
-        return(
-            <div className="text-center">
-                <p>Подгрузка данных...</p>
-                <p className="pt-2 text-sm text-red-400">Если данные не подгрузились спустя несколько минут, скорее всего их нет</p>
-            </div>
-
-        )
-    }
-
+        </>
+    )
 }

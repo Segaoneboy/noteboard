@@ -24,7 +24,6 @@ export default function RegForm(){
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ name, email, password }),
-                credentials: "include",
             });
 
             const data = await res.json();

@@ -3,6 +3,7 @@ import { Tektur } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/UI/Header";
 import {Toaster} from "react-hot-toast";
+import FetchProvider from "@/providers/FetchProvider";
 
 
 const tektur = Tektur ({
@@ -16,19 +17,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
+                               children,
+                           }: Readonly<{
+    children: React.ReactNode;
 }>) {
-  return (
-      <html lang="en">
-      <body
-          className={`${tektur.className}  antialiased`}
-      >
-      <Header/>
-      <Toaster/>
-      {children}
-      </body>
-      </html>
-  );
+    return (
+        <html lang="en">
+        <body
+            className={`${tektur.className}  antialiased`}
+        >
+        <Header/>
+        <Toaster/>
+        <FetchProvider>
+            {children}
+        </FetchProvider>
+        </body>
+        </html>
+    );
 }
