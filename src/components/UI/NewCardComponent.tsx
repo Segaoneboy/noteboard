@@ -12,7 +12,7 @@ export default function NewCardComponent() {
     const maxChars = 400;
 
     const textareaRef = useRef(null);
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value);
     }
 
@@ -75,7 +75,7 @@ export default function NewCardComponent() {
                             name="description"
                             id="description"
                             maxLength={maxChars}
-                            rows="12"
+                            rows={12}
                             placeholder="Введите описание"
                             className="w-full rounded bg-[#282828] p-2 focus:outline-none focus:ring-2 focus:ring-[#575757] "
                             required
