@@ -12,8 +12,7 @@ export default function Header() {
     fetch("/api/user/getinfo")
         .then(async (res) => {
             if (res.status === 401) {
-                toast.error(`Пользователь не авторизован`);
-                router.replace("/auth");
+                setAuthorized(false);
                 return;
             }
             setAuthorized(true);
@@ -31,7 +30,7 @@ export default function Header() {
             </div>
             <div className="flex flex-wrap gap-2 justify-between items-center">
                 {authorized ? <Link href={`/dashboard?name=${encodeURIComponent(userName)}`}
-                                    className="p-2 rounded-lg  hover:bg-[#262626]  hover:text-[#f8ff8a] ">Account </Link> :
+                                    className="p-2 rounded-lg  hover:bg-[#262626]  hover:text-[#f8ff8a] ">Dashboard </Link> :
                     <Link href="/auth"
                           className="p-2 rounded-lg  hover:bg-[#262626]  hover:text-[#f8ff8a] ">Account </Link>}
                 {/*<Link href="/newcard" className="p-1  rounded-lg hover:underline">Create note</Link>*/}

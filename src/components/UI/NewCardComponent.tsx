@@ -12,16 +12,8 @@ export default function NewCardComponent() {
     const maxChars = 400;
 
     const textareaRef = useRef(null);
-    useEffect(() => {
-        if (textareaRef.current) {
-            textareaRef.current.style.height = "auto";
-            textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
-        }
-    }, [value]);
-
     const handleChange = (e) => {
         setValue(e.target.value);
-
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -83,7 +75,7 @@ export default function NewCardComponent() {
                             name="description"
                             id="description"
                             maxLength={maxChars}
-                            rows="10"
+                            rows="12"
                             placeholder="Введите описание"
                             className="w-full rounded bg-[#282828] p-2 focus:outline-none focus:ring-2 focus:ring-[#575757] "
                             required
