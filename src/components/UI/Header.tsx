@@ -1,11 +1,9 @@
 "use client";
 import Link from "next/link";
-import {usePathname, useRouter} from "next/navigation";
-import {toast} from "react-hot-toast";
+import {usePathname} from "next/navigation";
 import {useState} from "react";
 export default function Header() {
     const pathname = usePathname();
-    const router = useRouter();
     const [userName, setUserName] = useState("");
     const [authorized, setAuthorized] = useState(false);
 
