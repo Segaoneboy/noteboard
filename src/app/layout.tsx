@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/UI/Header";
 import {Toaster} from "react-hot-toast";
 import FetchProvider from "@/providers/FetchProvider";
+import {UserProvider} from "@/context/UserContext";
 
 
 const tektur = Tektur ({
@@ -26,11 +27,13 @@ export default function RootLayout({
         <body
             className={`${tektur.className}  antialiased`}
         >
-        <Header/>
-        <Toaster/>
-        <FetchProvider>
-            {children}
-        </FetchProvider>
+        <UserProvider>
+            <Header/>
+            <Toaster/>
+            <FetchProvider>
+                {children}
+            </FetchProvider>
+        </UserProvider>
         </body>
         </html>
     );

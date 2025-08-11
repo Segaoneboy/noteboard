@@ -1,23 +1,11 @@
 "use client";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import {useState} from "react";
+import {useUser} from "@/context/UserContext";
 export default function Header() {
     const pathname = usePathname();
-    const [userName, setUserName] = useState("");
-    const [authorized, setAuthorized] = useState(false);
+    const { authorized, name } = useUser();
 
-    fetch("/api/user/getinfo")
-        .then(async (res) => {
-            if (res.status === 401) {
-                setAuthorized(false);
-                return;
-            }
-            setAuthorized(true);
-            const data = await res.json();
-            setUserName(data.name);
-
-        }).catch(err => console.log(err));
 
     if (pathname === "/auth") return <></>;
     return (
@@ -27,7 +15,7 @@ export default function Header() {
                 <Link href="/" className="text-[#EFFF41] text-xl">NB</Link>
             </div>
             <div className="flex flex-wrap gap-2 justify-between items-center">
-                {authorized ? <Link href={`/dashboard?name=${encodeURIComponent(userName)}`}
+                {authorized ? <Link href={`/dashboard`}
                                     className="p-2 rounded-lg  hover:bg-[#262626]  hover:text-[#f8ff8a] ">Dashboard </Link> :
                     <Link href="/auth"
                           className="p-2 rounded-lg  hover:bg-[#262626]  hover:text-[#f8ff8a] ">Account </Link>}

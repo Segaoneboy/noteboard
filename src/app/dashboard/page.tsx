@@ -2,15 +2,11 @@
 import {useState, useEffect} from "react";
 import CardsComponent from "@/components/UI/CardsComponent";
 import NewCardComponent from "@/components/UI/NewCardComponent";
+import {useUser} from "@/context/UserContext";
 
 export default function Dashboard () {
     const [notestate, setNoteState] = useState<true | false>(true)
-    const [name, setName] = useState<string | null>(null);
-
-    useEffect(() => {
-        const searchParams = new URLSearchParams(window.location.search);
-        setName(searchParams.get("name"));
-    }, []);
+    const { authorized, name } = useUser();
     return (
         <>
             <div className="flex flex-col justify-center items-center gap-5 p-5">
