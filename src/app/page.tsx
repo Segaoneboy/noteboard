@@ -35,7 +35,10 @@ export default function Home() {
                                     href="/auth"
                                     className=" p-2 rounded-lg  hover:bg-[#262626]   "
                                 >
-                                    Создать первую заметку
+                                    <img src="/test2.png" alt="test" width={380} height={380} className="rounded-t-2xl "/>
+                                    <h2 className="  text-center text-2xl md:hover:text-[#f8ff8a] md:text-white text-[#f8ff8a]">
+                                        Создать первую заметку
+                                    </h2>
                                 </Link>
                             )}
                     </div>
